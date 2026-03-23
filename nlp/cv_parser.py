@@ -1,5 +1,3 @@
-# nlp/cv_parser.py
-
 import pdfplumber
 from docx import Document
 import re
@@ -44,7 +42,12 @@ def extract_basic_info(text: str) -> Dict:
     email = email_match[0] if email_match else ""
 
     lines = [line.strip() for line in text.split("\n") if line.strip()]
-    name = lines[0] if lines else ""
+
+    name = ""
+    for line in lines[:5]:  # check first few lines
+        if "@" not in line and len(line.split()) <= 4:
+            name = line
+            break
 
     return {
         "name": name,
@@ -66,7 +69,7 @@ def extract_entities(text: str) -> Dict:
     skills_found = []
     for skill in COMMON_SKILLS:
         if skill in text_lower:
-            skills_found.append(skill.capitalize())
+            skills_found.append(skill.title())
 
     return {
         "skills": list(set(skills_found)),
@@ -77,10 +80,12 @@ def extract_entities(text: str) -> Dict:
 
 
 def estimate_years_experience(text: str) -> int:
-    # simple heuristic: count years mentioned
     years = re.findall(r"(20\d{2})", text)
+    years = sorted(set(map(int, years)))
+
     if len(years) >= 2:
-        return min(len(set(years)), 10)  # cap at 10
+        return min(years[-1] - years[0], 15)
+
     return 0
 
 
@@ -93,7 +98,13 @@ def determine_seniority(years_experience: int) -> str:
         return "Senior"
 
 
-def build_user_profile_json(entities: Dict, basic_info: Dict, text: str, preferences_text: str) -> Dict:
+def build_user_profile_json(
+    entities: Dict,
+    basic_info: Dict,
+    text: str,
+    preferences_text: str
+) -> Dict:
+
     years_experience = estimate_years_experience(text)
     seniority = determine_seniority(years_experience)
 
@@ -117,7 +128,9 @@ def parse_cv(file_path: str, preferences_text: str) -> Dict:
     text = extract_text(file_path)
 
     if not text:
-        raise ValueError("Could not extract text from CV. Ensure it is not a scanned PDF.")
+        raise ValueError(
+            "Could not extract text from CV. Ensure it is not a scanned PDF."
+        )
 
     print(f"Extracted text length: {len(text)}")
 
