@@ -1,0 +1,86 @@
+{
+    "programming_languages": [
+      "Python", "Java", "JavaScript", "TypeScript", "C++", "C#", "C", "Go", "Rust", "Ruby",
+      "PHP", "Swift", "Kotlin", "Scala", "Dart", "R", "MATLAB", "Perl", "Shell", "Bash",
+      "PowerShell", "SQL", "PL/SQL", "T-SQL", "GraphQL", "HTML5", "CSS3", "SASS", "LESS"
+    ],
+    "web_development": [
+      "React", "React.js", "Angular", "Angular.js", "Vue.js", "Vue", "Next.js", "Nuxt.js",
+      "Django", "Flask", "FastAPI", "Spring Boot", "Spring", "Node.js", "Express.js",
+      "ASP.NET", ".NET Core", "Ruby on Rails", "Laravel", "PHP", "WordPress", "Drupal",
+      "Tailwind CSS", "Bootstrap", "Material UI", "jQuery"
+    ],
+    "data_science_ml": [
+      "Machine Learning", "Deep Learning", "Natural Language Processing", "NLP",
+      "Computer Vision", "Reinforcement Learning", "LLM", "Large Language Models",
+      "Generative AI", "Transformers", "BERT", "GPT", "LangChain", "LangGraph",
+      "Pandas", "NumPy", "SciPy", "Scikit-learn", "Scikit", "TensorFlow", "PyTorch",
+      "Keras", "JAX", "XGBoost", "LightGBM", "CatBoost", "Hugging Face", "OpenCV"
+    ],
+    "data_engineering": [
+      "Apache Spark", "PySpark", "Apache Kafka", "Apache Airflow", "Apache Hadoop",
+      "Hive", "Presto", "Trino", "Snowflake", "BigQuery", "Redshift", "Databricks",
+      "ETL", "Data Warehousing", "Data Pipeline", "Data Lake", "Data Modeling",
+      "dbt", "Flink", "Storm", "Elasticsearch", "Logstash", "Kibana", "ELK Stack"
+    ],
+    "databases": [
+      "PostgreSQL", "MySQL", "MongoDB", "Cassandra", "Redis", "Elasticsearch",
+      "DynamoDB", "Firebase", "SQLite", "MariaDB", "Oracle DB", "MS SQL Server",
+      "Neo4j", "GraphQL", "Prisma", "Sequelize", "SQLAlchemy"
+    ],
+    "cloud_devops": [
+      "AWS", "Amazon Web Services", "Azure", "Google Cloud Platform", "GCP",
+      "Docker", "Kubernetes", "K8s", "Terraform", "Ansible", "Puppet", "Chef",
+      "Jenkins", "GitHub Actions", "GitLab CI", "CircleCI", "Travis CI", "ArgoCD",
+      "Prometheus", "Grafana", "Datadog", "New Relic", "Splunk", "ELK", "CloudFormation"
+    ],
+    "version_control": [
+      "Git", "GitHub", "GitLab", "Bitbucket", "SVN", "Mercurial", "Git Flow", "Trunk Based Development"
+    ],
+    "api_integration": [
+      "REST API", "RESTful API", "GraphQL", "gRPC", "WebSocket", "SOAP", "API Gateway",
+      "OpenAPI", "Swagger", "Postman", "Insomnia", "Apollo", "Prisma"
+    ],
+    "testing_qa": [
+      "Unit Testing", "Integration Testing", "End-to-End Testing", "Jest", "PyTest",
+      "JUnit", "Selenium", "Cypress", "Playwright", "TestCafe", "Mocha", "Chai",
+      "Test Driven Development", "TDD", "Behavior Driven Development", "BDD"
+    ],
+    "monitoring_logging": [
+      "Prometheus", "Grafana", "Datadog", "New Relic", "Splunk", "ELK Stack",
+      "Elasticsearch", "Logstash", "Kibana", "OpenTelemetry", "Jaeger", "Zipkin"
+    ],
+    "soft_skills": [
+      "Leadership", "Communication", "Teamwork", "Collaboration", "Problem Solving",
+      "Critical Thinking", "Analytical Thinking", "Time Management", "Organization",
+      "Project Management", "Agile", "Scrum", "Kanban", "Jira", "Confluence",
+      "Adaptability", "Creativity", "Innovation", "Mentoring", "Coaching",
+      "Presentation Skills", "Public Speaking", "Negotiation", "Conflict Resolution",
+      "Decision Making", "Strategic Planning", "Cross-functional Collaboration"
+    ],
+    "languages": [
+      "English", "Irish", "Polish", "French", "Spanish", "German", "Dutch", "Italian",
+      "Portuguese", "Russian", "Chinese", "Japanese", "Korean", "Arabic", "Hindi"
+    ],
+    "certifications": [
+      "AWS Certified", "Azure Certified", "Google Cloud Certified", "Kubernetes Certified",
+      "Scrum Master", "Product Owner", "PMP", "ITIL", "TOGAF", "CISSP", "CISM",
+      "CompTIA", "Cisco Certified", "Oracle Certified", "Microsoft Certified"
+    ],
+    "tools_platforms": [
+      "Jira", "Confluence", "Slack", "Trello", "Asana", "Monday.com", "Notion",
+      "Figma", "Sketch", "Adobe XD", "InVision", "Zeplin", "Miro", "Whimsical",
+      "VS Code", "IntelliJ", "PyCharm", "Eclipse", "Xcode", "Android Studio"
+    ],
+    "methodologies": [
+      "Agile", "Scrum", "Kanban", "Lean", "Waterfall", "SAFe", "DevOps",
+      "CI/CD", "Test Driven Development", "TDD", "Behavior Driven Development", "BDD",
+      "Domain Driven Design", "DDD", "Microservices", "Serverless", "Event Driven"
+    ],
+    "specialized_ai": [
+      "LangChain", "LangGraph", "LlamaIndex", "Vector Databases", "ChromaDB",
+      "Pinecone", "Weaviate", "Milvus", "Ollama", "Hugging Face", "Transformers",
+      "RAG", "Retrieval Augmented Generation", "Prompt Engineering", "Fine-tuning",
+      "RLHF", "Reinforcement Learning", "Computer Vision", "Audio Processing"
+    ]
+  }

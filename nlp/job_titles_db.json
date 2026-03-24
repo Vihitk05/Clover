@@ -1,0 +1,86 @@
+{
+  "software_engineering": [
+    "Software Engineer", "Software Developer", "Backend Developer", "Frontend Developer", 
+    "Full Stack Developer", "Fullstack Developer", "Web Developer", "Application Developer",
+    "Mobile Developer", "iOS Developer", "Android Developer", "React Developer", 
+    "Angular Developer", "Node.js Developer", "Python Developer", "Java Developer",
+    ".NET Developer", "C# Developer", "Go Developer", "Rust Developer"
+  ],
+  "data_science_analytics": [
+    "Data Scientist", "Data Analyst", "Data Engineer", "Machine Learning Engineer",
+    "ML Engineer", "AI Engineer", "AI/ML Engineer", "Data Architect", "Data Warehouse Engineer",
+    "Business Intelligence Analyst", "BI Analyst", "Analytics Engineer", "Data Science Manager",
+    "Research Scientist", "Quantitative Analyst", "Quant Analyst"
+  ],
+  "devops_cloud": [
+    "DevOps Engineer", "Cloud Engineer", "Site Reliability Engineer", "SRE",
+    "Platform Engineer", "Infrastructure Engineer", "Systems Administrator",
+    "Cloud Architect", "AWS Engineer", "Azure Engineer", "GCP Engineer",
+    "Kubernetes Engineer", "Docker Engineer", "CI/CD Engineer"
+  ],
+  "ai_ml_specialist": [
+    "AI Researcher", "Machine Learning Researcher", "Deep Learning Engineer",
+    "Computer Vision Engineer", "NLP Engineer", "Natural Language Processing Engineer",
+    "LLM Engineer", "Generative AI Engineer", "Prompt Engineer", "AI Product Manager",
+    "MLOps Engineer", "AI Ethics Specialist"
+  ],
+  "database_admin": [
+    "Database Administrator", "DBA", "Database Engineer", "Database Architect",
+    "SQL Developer", "Data Warehouse Developer", "ETL Developer", "Data Integration Specialist",
+    "MongoDB Administrator", "PostgreSQL Administrator", "MySQL Administrator"
+  ],
+  "security": [
+    "Security Engineer", "Security Analyst", "Cyber Security Engineer", "Information Security Analyst",
+    "Penetration Tester", "Ethical Hacker", "Security Architect", "Security Consultant",
+    "SOC Analyst", "Security Operations Analyst", "Compliance Officer"
+  ],
+  "project_product": [
+    "Project Manager", "Technical Project Manager", "Product Manager", "Product Owner",
+    "Scrum Master", "Agile Coach", "Program Manager", "Delivery Manager",
+    "Technical Program Manager", "Product Analyst"
+  ],
+  "qa_testing": [
+    "QA Engineer", "Quality Assurance Engineer", "Test Engineer", "Automation Engineer",
+    "SDET", "Software Development Engineer in Test", "Test Lead", "QA Analyst",
+    "Performance Test Engineer", "Security Tester"
+  ],
+  "system_network": [
+    "System Administrator", "SysAdmin", "Network Engineer", "Network Administrator",
+    "Systems Engineer", "IT Support Specialist", "Help Desk Engineer", "IT Operations",
+    "Infrastructure Engineer", "Network Architect"
+  ],
+  "architecture": [
+    "Software Architect", "Solutions Architect", "Enterprise Architect",
+    "Technical Architect", "Cloud Architect", "Data Architect", "Security Architect",
+    "Application Architect", "Infrastructure Architect"
+  ],
+  "management_leadership": [
+    "Engineering Manager", "Tech Lead", "Technical Lead", "Development Manager",
+    "IT Manager", "Head of Engineering", "VP of Engineering", "CTO", "Director of Engineering",
+    "Team Lead", "Technical Director"
+  ],
+  "consulting": [
+    "Technical Consultant", "IT Consultant", "Solutions Consultant", "Presales Engineer",
+    "Sales Engineer", "Implementation Consultant", "Integration Specialist",
+    "Business Consultant", "Digital Transformation Consultant"
+  ],
+  "blockchain_web3": [
+    "Blockchain Developer", "Blockchain Engineer", "Smart Contract Developer",
+    "Solidity Developer", "Web3 Developer", "Crypto Engineer", "DeFi Developer",
+    "NFT Developer", "Blockchain Architect"
+  ],
+  "game_development": [
+    "Game Developer", "Game Engineer", "Unity Developer", "Unreal Engine Developer",
+    "Game Designer", "Technical Artist", "Graphics Programmer", "Gameplay Programmer"
+  ],
+  "embedded_iot": [
+    "Embedded Systems Engineer", "Embedded Software Engineer", "Firmware Engineer",
+    "IoT Engineer", "Internet of Things Engineer", "Hardware Engineer",
+    "Robotics Engineer", "Electronics Engineer"
+  ],
+  "support_operations": [
+    "Technical Support Engineer", "Support Engineer", "IT Support Specialist",
+    "Help Desk Analyst", "Customer Support Engineer", "Operations Engineer",
+    "Site Reliability Engineer", "SRE"
+  ]
+}
