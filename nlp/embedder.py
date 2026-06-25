@@ -1,28 +1,30 @@
-# nlp/embedder.py
 import numpy as np
 from typing import List, Dict, Any
 import logging
-import hashlib
+
+from agents.gemini_client import GeminiClient
+from config.settings import config
 
 logger = logging.getLogger(__name__)
 
 class ProfileEmbedder:
-    """Handles embedding of user profiles using local Sentence Transformers"""
+    """Handles embedding of user profiles using Gemini embeddings with local fallback."""
     
-    def __init__(self, use_local_model: bool = True, persist_directory: str = "./chroma_db"):
+    def __init__(self, use_local_model: bool = False, persist_directory: str = "./chroma_db"):
         """
         Initialize ProfileEmbedder
         
         Args:
-            use_local_model: If True, use local Sentence Transformers (free, no API)
+            use_local_model: If True, force local Sentence Transformers fallback.
             persist_directory: Directory to persist ChromaDB data
         """
+        self.gemini = GeminiClient()
         self.use_local_model = use_local_model
         self.model = None
-        self.embedding_dim = 384  # all-MiniLM-L6-v2 dimension
+        self.embedding_dim = config.EMBEDDING_DIMENSIONS
         
-        # Initialize local model
-        if use_local_model:
+        # Initialize local model if requested or when Gemini is not configured.
+        if use_local_model or not self.gemini.enabled:
             try:
                 from sentence_transformers import SentenceTransformer
                 self.model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -36,7 +38,7 @@ class ProfileEmbedder:
                 logger.error(f"Error loading model: {e}")
                 self.use_local_model = False
                 self._init_tfidf()
-        else:
+        elif not self.use_local_model:
             self._init_tfidf()
         
         # Initialize ChromaDB
@@ -45,7 +47,7 @@ class ProfileEmbedder:
             self.chroma_client = chromadb.PersistentClient(path=persist_directory)
             try:
                 self.collection = self.chroma_client.get_collection("profile_embeddings")
-            except:
+            except Exception:
                 self.collection = self.chroma_client.create_collection(
                     name="profile_embeddings",
                     metadata={"hnsw:space": "cosine"}
@@ -101,7 +103,13 @@ class ProfileEmbedder:
         logger.info(f"Embedding profile: {text_to_embed[:200]}...")
         
         # Generate embedding
-        if self.use_local_model and self.model:
+        if self.gemini.enabled and not self.use_local_model:
+            try:
+                embedding = self.gemini.embed_text(text_to_embed, dimensions=self.embedding_dim)
+            except Exception as e:
+                logger.error(f"Error with Gemini embeddings: {e}")
+                embedding = self._get_tfidf_embedding(text_to_embed)
+        elif self.use_local_model and self.model:
             try:
                 embedding = self.model.encode(text_to_embed).tolist()
             except Exception as e:
@@ -113,7 +121,8 @@ class ProfileEmbedder:
         # Store in ChromaDB if available
         if self.collection and profile.get('id'):
             try:
-                self.collection.add(
+                # Use upsert so repeated profile refreshes do not fail on duplicate ids.
+                self.collection.upsert(
                     embeddings=[embedding],
                     metadatas=[{
                         "user_profile_id": profile.get('id'),
@@ -139,9 +148,24 @@ class ProfileEmbedder:
                 ids=[profile_id],
                 include=["embeddings"]
             )
-            
-            if result['embeddings'] and len(result['embeddings']) > 0:
-                return result['embeddings'][0]
+
+            embeddings = result.get("embeddings") if isinstance(result, dict) else None
+            if embeddings is None:
+                return None
+
+            # Chroma may return Python lists or numpy arrays depending on backend/version.
+            if hasattr(embeddings, "size"):
+                if embeddings.size == 0:
+                    return None
+            elif len(embeddings) == 0:
+                return None
+
+            first = embeddings[0]
+            if first is None:
+                return None
+            if hasattr(first, "tolist"):
+                return first.tolist()
+            return first
         except Exception as e:
             logger.error(f"Error retrieving profile embedding: {e}")
         

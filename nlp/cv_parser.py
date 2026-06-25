@@ -83,7 +83,7 @@ def extract_name(text: str, lines: List[str]) -> str:
         if line and not any(x in line.lower() for x in ['email', 'phone', 'linkedin', 'github', 'date of birth', 'nationality', 'address']):
             words = line.split()
             if 2 <= len(words) <= 5:
-                if not line.isupper() and not any(x in line.lower() for x in ['education', 'experience', 'skills']):
+                if not any(x in line.lower() for x in ['education', 'experience', 'skills', 'summary', 'objective', 'profile', 'curriculum vitae', 'resume']):
                     return line
     return ""
 
@@ -410,6 +410,99 @@ def extract_experiences(text: str, lines: List[str]) -> Tuple[List[Dict], float,
     
     return experiences, total_years, job_titles
 
+
+def _classify_experience_type(role: str, description: str = "") -> str:
+    token = f"{role} {description}".lower()
+    internship_keywords = [
+        "intern",
+        "internship",
+        "trainee",
+        "co-op",
+        "co op",
+        "graduate intern",
+    ]
+    if any(key in token for key in internship_keywords):
+        return "internship"
+    return "full_time"
+
+
+def _infer_seniority(total_years: float, internship_years: float, fulltime_years: float) -> str:
+    if fulltime_years < 0.5 and internship_years > 0:
+        return "Fresher"
+    if total_years < 1:
+        return "Entry Level"
+    if total_years < 3:
+        return "Junior"
+    if total_years < 6:
+        return "Mid"
+    return "Senior"
+
+
+def _compute_profile_signals(cv_text: str, experiences: List[Dict], skills: List[str]) -> Dict:
+    internship_years = 0.0
+    fulltime_years = 0.0
+    leadership_experience = False
+    leadership_roles = []
+
+    leadership_keywords = [
+        "lead",
+        "manager",
+        "architect",
+        "principal",
+        "staff",
+        "owner",
+        "mentored",
+        "team lead",
+    ]
+    complexity_keywords = {
+        "high": ["distributed", "microservices", "scalable", "kubernetes", "architecture", "production", "ci/cd"],
+        "medium": ["api", "backend", "frontend", "automation", "cloud", "docker"],
+    }
+
+    for exp in experiences:
+        role = (exp.get("role") or "").strip()
+        description = (exp.get("description") or "").strip()
+        years = float(exp.get("years") or 0.0)
+        exp_type = _classify_experience_type(role=role, description=description)
+        exp["experience_type"] = exp_type
+        if exp_type == "internship":
+            internship_years += years
+        else:
+            fulltime_years += years
+
+        role_lower = f"{role} {description}".lower()
+        if any(key in role_lower for key in leadership_keywords):
+            leadership_experience = True
+            leadership_roles.append(role)
+
+    text_lower = cv_text.lower()
+    high_hits = sum(1 for kw in complexity_keywords["high"] if kw in text_lower)
+    medium_hits = sum(1 for kw in complexity_keywords["medium"] if kw in text_lower)
+
+    if high_hits >= 3 or len(skills) >= 14:
+        tech_stack_maturity = "advanced"
+    elif high_hits >= 1 or medium_hits >= 3 or len(skills) >= 8:
+        tech_stack_maturity = "intermediate"
+    else:
+        tech_stack_maturity = "foundational"
+
+    if high_hits >= 3:
+        project_complexity = "high"
+    elif high_hits >= 1 or medium_hits >= 3:
+        project_complexity = "medium"
+    else:
+        project_complexity = "basic"
+
+    return {
+        "internship_years": round(internship_years, 2),
+        "fulltime_years": round(fulltime_years, 2),
+        "internship_only": fulltime_years < 0.5 and internship_years > 0,
+        "leadership_experience": leadership_experience,
+        "leadership_roles": leadership_roles,
+        "tech_stack_maturity": tech_stack_maturity,
+        "project_complexity": project_complexity,
+    }
+
 def parse_cv(file_path: str, preferences_text: str = "") -> Dict:
     """
     Universal CV parser that handles all formats and returns complete UserProfile
@@ -430,15 +523,12 @@ def parse_cv(file_path: str, preferences_text: str = "") -> Dict:
     education = extract_education(cv_text, lines)
     experiences, total_years, job_titles = extract_experiences(cv_text, lines)
     
-    # Determine seniority
-    if total_years < 1:
-        seniority = "Entry Level"
-    elif total_years < 3:
-        seniority = "Junior"
-    elif total_years < 5:
-        seniority = "Mid"
-    else:
-        seniority = "Senior"
+    signals = _compute_profile_signals(cv_text=cv_text, experiences=experiences, skills=skills)
+    seniority = _infer_seniority(
+        total_years=total_years,
+        internship_years=signals["internship_years"],
+        fulltime_years=signals["fulltime_years"],
+    )
     
     # Extract target role and location from preferences
     target_role = ""
@@ -471,7 +561,14 @@ def parse_cv(file_path: str, preferences_text: str = "") -> Dict:
         "experiences": experiences,
         "years_experience": total_years,
         "seniority_level": seniority,
+        "internship_years": signals["internship_years"],
+        "fulltime_years": signals["fulltime_years"],
+        "internship_only": signals["internship_only"],
+        "leadership_experience": signals["leadership_experience"],
+        "tech_stack_maturity": signals["tech_stack_maturity"],
+        "project_complexity": signals["project_complexity"],
         "education": education,
+        "raw_text": cv_text[:20000],
         "preferences_raw": preferences_text,
         "target_role": target_role,
         "target_location": target_location,

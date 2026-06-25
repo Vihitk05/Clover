@@ -1,1 +1,16 @@
-venv
+venv/
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.next/
+node_modules/
+dist/
+build/
+htmlcov/
+coverage.xml
+raw_html.html
+parsed_profile.json
+chroma_db/
+.env
+104738515
