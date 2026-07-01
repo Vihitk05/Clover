@@ -103,5 +103,4 @@ The backend data model currently includes:
 ## Current Project Shape
 
 Clover is now a working full-stack prototype of an adaptive job application assistant. It has a real user journey, persistent accounts, resume-aware profiles, explainable job matching, AI-assisted generation, document downloads, application tracking, scraper orchestration, and tests around important smoke paths such as API imports, auth, config, CV parsing, job ingestion, and matching.
-
 The system is designed so that core flows still work during development even when external services are unavailable. Gemini, ChromaDB, LangGraph, and scraper integrations enhance the experience when configured, but local fallbacks keep the product usable for testing and iteration. This makes Clover both a practical job-search tool and a foundation for further improvements in recommendation quality, document generation, scraper reliability, and personalized career guidance.
