@@ -87,7 +87,6 @@ Job records are stored with source hashes to avoid duplicate daily inserts. Each
 ## Data Model
 
 The backend data model currently includes:
-
 - Users, password hashes, OAuth identity fields, account status, creation timestamps, and login timestamps.
 - Refresh sessions with hashed refresh tokens, expiry, user agent, IP address, and revocation state.
 - User profiles with parsed resume data, skills, target role, target location, salary expectations, seniority, education, and resume version.
